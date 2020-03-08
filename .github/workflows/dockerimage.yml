@@ -1,15 +1,19 @@
-name: Docker Image CI
-
+name: Build and push Docker image
 on:
   push:
-    branches: [ master ]
+    branches:
+     - master
   pull_request:
-    branches: [ master ]
-
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build base image
       run: docker build -t bxggs/vnc-base base
+    - name: Login to registry
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Push base image to Docker Hub
+      run: docker push bxggs/vnc-base
