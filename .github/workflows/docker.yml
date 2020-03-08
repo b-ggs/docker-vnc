@@ -10,6 +10,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker build -t bxggs/vnc:base base
       - run: docker build -t bxggs/vnc:openbox openbox
+      - run: docker build -t bxggs/vnc:i3-gaps i3-gaps
       - run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - run: docker push bxggs/vnc:base
       - run: docker push bxggs/vnc:openbox
+      - run: docker push bxggs/vnc:i3-gaps
