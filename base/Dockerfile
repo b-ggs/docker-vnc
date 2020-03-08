@@ -4,6 +4,8 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
   && rm -rf /tmp/*
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt update \
   && apt install -y x11vnc xvfb \
   && rm -rf /var/lib/apt/lists/*
