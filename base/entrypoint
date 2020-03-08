@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+Xvfb "$DISPLAY" -screen 0 "$DISPLAY_RESOLUTION" &
+
+exec x11vnc -display "$DISPLAY" -xkb -forever -passwd "$VNC_PASSWORD" -rfbport "$VNC_PORT"

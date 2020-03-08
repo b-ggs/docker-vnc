@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+x11vnc -display "$DISPLAY" -xkb -forever -passwd "$VNC_PASSWORD" -rfbport "$VNC_PORT"
