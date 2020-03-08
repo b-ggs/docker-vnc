@@ -1,7 +1,5 @@
 FROM bxggs/vnc:base
 
-COPY services.d /etc/services.d/
-
 RUN apt update \
   # https://gist.github.com/boreycutts/6417980039760d9d9dac0dd2148d4783
   && apt install -y git cmake libxcb-xrm-dev libxcb-shape0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev libtool automake \
@@ -26,3 +24,5 @@ RUN apt update \
   && make install \
   && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/*
+
+CMD ["i3"]
