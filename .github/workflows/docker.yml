@@ -4,36 +4,12 @@ on:
     branches:
      - master
 jobs:
-  build-and-push-base-image:
+  build-and-push-images:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_TAG: bxggs/vnc:base
-      RELATIVE_PATH: base
     steps:
       - uses: actions/checkout@v2
-      - name: Build base image
-        run: docker build -t "$DOCKER_TAG" "$RELATIVE_PATH"
-      - name: Login to registry
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-      - name: Push base image
-        run: |
-          docker push "$DOCKER_TAG"
-  build-and-push-dependent-images:
-    runs-on: ubuntu-latest
-    env:
-      DOCKER_TAGS: (openbox)
-      RELATIVE_PATHS: (openbox)
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build images
-        run: |
-          for i in "${!DOCKER_TAGS[@]}"; do
-            docker build -t "${DOCKER_TAGS[$i]}" "${RELATIVE_PATHS[$i]}"
-          done
-      - name: Login to registry
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-      - name: Push images
-        run: |
-          for docker_tag in "${DOCKER_TAGS[@]}"; do
-            docker push "$docker_tag"
-          done
+      - run: docker build -t bxggs/vnc:base base
+      - run: docker build -t bxggs/vnc:openbox openbox
+      - run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      - run: docker push bxggs/vnc:base
+      - run: docker push bxggs/vnc:openbox
