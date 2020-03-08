@@ -27,6 +27,7 @@ jobs:
             DOCKER_TAG: bxggs/vnc:i3-gaps
             RELATIVE_PATH: i3-gaps
     steps:
+      - uses: actions/checkout@v2
       - run: docker build -t "${{ matrix.DOCKER_TAG }}" "${{ matrix.RELATIVE_PATH }}"
       - run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - run: docker push "${{ matrix.DOCKER_TAG }}"
