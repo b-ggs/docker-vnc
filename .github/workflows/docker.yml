@@ -4,14 +4,23 @@ on:
     branches:
      - master
 jobs:
-  build-and-push-images:
+  base-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: docker build -t bxggs/vnc:base base
-      - run: docker build -t bxggs/vnc:openbox openbox
-      - run: docker build -t bxggs/vnc:i3-gaps i3-gaps
       - run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - run: docker push bxggs/vnc:base
-      - run: docker push bxggs/vnc:openbox
-      - run: docker push bxggs/vnc:i3-gaps
+  de-images:
+    needs: base-image
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        - DOCKER_TAG: bxggs/vnc:openbox
+          RELATIVE_PATH: openbox
+        - DOCKER_TAG: bxggs/vnc:i3-gaps
+          RELATIVE_PATH: i3-gaps
+    steps:
+      - run: docker build -t "${{ matrix.DOCKER_TAG }}" "${{ matrix.RELATIVE_PATH }}"
+      - run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      - run: docker push "${{ matrix.DOCKER_TAG }}"
