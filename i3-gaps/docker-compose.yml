@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  machine:
+    build: .
+    image: bxggs/vnc:i3-gaps
+    ports:
+      - 5901:5901
+    container_name: vnc-i3-gaps
+    stdin_open: true
+    tty: true
