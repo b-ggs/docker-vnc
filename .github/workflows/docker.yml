@@ -19,7 +19,7 @@ jobs:
         run: |
           docker push "$DOCKER_TAG"
   build-and-push-dependent-images:
-    runs-on: ubuntu-latest:
+    runs-on: ubuntu-latest
     env:
       DOCKER_TAGS: (openbox)
       RELATIVE_PATHS: (openbox)
