@@ -26,6 +26,9 @@ jobs:
           - name: i3-gaps
             DOCKER_TAG: bxggs/vnc:i3-gaps
             RELATIVE_PATH: i3-gaps
+          - name: xfce4
+            DOCKER_TAG: bxggs/vnc:xfce4
+            RELATIVE_PATH: xfce4
     steps:
       - uses: actions/checkout@v2
       - run: docker build -t "${{ matrix.DOCKER_TAG }}" "${{ matrix.RELATIVE_PATH }}"
