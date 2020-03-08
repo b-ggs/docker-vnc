@@ -12,8 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build base image
-      run: docker build -t bxggs/vnc-base base
+      run: docker build -t bxggs/vnc:base base
     - name: Login to registry
       run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - name: Push base image to Docker Hub
-      run: docker push bxggs/vnc-base
+      run: docker push bxggs/vnc:base
