@@ -29,6 +29,9 @@ jobs:
           - name: xfce4
             DOCKER_TAG: bxggs/vnc:xfce4
             RELATIVE_PATH: xfce4
+          - name: wmaker
+            DOCKER_TAG: bxggs/vnc:wmaker
+            RELATIVE_PATH: wmaker
     steps:
       - uses: actions/checkout@v2
       - run: docker build -t "${{ matrix.DOCKER_TAG }}" "${{ matrix.RELATIVE_PATH }}"
