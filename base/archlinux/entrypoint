@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ "$1" == "docker-start" ]; then
+  shift
+  mkdir -p "$HOME/.vnc"
+  echo "$PASSWORD" | vncpasswd -f > "$HOME/.vnc/passwd"
+  chmod 600 "$HOME/.vnc/passwd"
+  rm -rf /tmp/.X1-lock
+  vncserver "$DISPLAY" -geometry "$GEOMETRY" -rfbport "$PORT"
+  touch "/root/.vnc/${HOSTNAME}${DISPLAY}.log"
+  exec tail -f "/root/.vnc/${HOSTNAME}${DISPLAY}.log"
+fi
+
+exec "$@"
