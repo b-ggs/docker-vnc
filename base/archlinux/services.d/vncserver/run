@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bash
+
+set -ex
+
+mkdir -p "$HOME/.vnc"
+echo "$PASSWORD" | vncpasswd -f > "$HOME/.vnc/passwd"
+chmod 600 "$HOME/.vnc/passwd"
+rm -rf /tmp/.X1-lock
+touch "$HOME/.vnc/xstartup"
+chmod +x "$HOME/.vnc/xstartup"
+vncserver "$DISPLAY" -geometry "$GEOMETRY" -rfbport "$PORT"
+touch "/root/.vnc/${HOSTNAME}${DISPLAY}.log"
+tail -f "/root/.vnc/${HOSTNAME}${DISPLAY}.log"
